@@ -11,7 +11,6 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-import os
 # Force Flask to always find templates/static relative to this app.py file
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -43,7 +42,6 @@ if database_url:
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///schools.db"
 
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = os.path.join(app.static_folder, "pictures")
 
@@ -93,7 +91,9 @@ class School(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(School, int(user_id))
-
+@app.before_request
+def ensure_tables_exist():
+    db.create_all()
 # -----------------------------
 # ROUTES
 # -----------------------------
