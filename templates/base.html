@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title if title else "EcoFlight" }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+
+      <a class="brand" href="{{ url_for('index') }}">
+        <div class="brand__icon">EF</div>
+        EcoFlight
+      </a>
+
+      <nav class="nav__links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a href="{{ url_for('lowest_emission_flights') }}">Lowest-Emission Flights</a>
+
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('dashboard') }}">Dashboard</a>
+          <a class="btn btn--ghost btn--sm" href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}">Login</a>
+          <a class="btn btn--primary btn--sm" href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+
+      <div>
+        <div class="footer__brand-name">
+          <div class="footer__brand-icon">EF</div>
+          EcoFlight
+        </div>
+        <p class="footer__desc">
+          Helping schools track flight emissions, earn sustainability points,
+          and compete on the path to a greener future.
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h4>Platform</h4>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a href="{{ url_for('lowest_emission_flights') }}">Lowest-Emission Flights</a>
+      </div>
+
+      <div class="footer__col">
+        <h4>Account</h4>
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('dashboard') }}">Dashboard</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}">Login</a>
+          <a href="{{ url_for('register') }}">Register Your School</a>
+        {% endif %}
+      </div>
+
+    </div>
+    <div class="footer__bottom">
+      © {{ (now.year if now else 2026) }} EcoFlight — Reducing aviation's climate impact, one school at a time.
+    </div>
+  </footer>
+
+</body>
+</html>

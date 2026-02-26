@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ══════════════════════════════════════════
+     SPLIT HERO
+     ══════════════════════════════════════════ -->
+<section class="split-hero">
+  <div class="split-hero__img">
+    <img src="{{ url_for('static', filename='pictures/hero.jpg') }}" alt="Airplane in flight">
+  </div>
+  <div class="split-hero__panel split-hero__panel--green">
+    <div class="split-hero__breadcrumb">Schools Climate Challenge</div>
+    <h1 class="split-hero__title">
+      Track Flights.<br>
+      Earn Points.<br>
+      Go Greener.
+    </h1>
+    <p class="split-hero__body">
+      EcoFlight empowers schools to measure their aviation footprint,
+      take sustainable actions, and compete on the leaderboard for a better planet.
+    </p>
+    <div class="split-hero__pills">
+      <span class="split-hero__pill">Flight Tracking</span>
+      <span class="split-hero__pill">Green Actions</span>
+      <span class="split-hero__pill">School Leaderboard</span>
+    </div>
+    <div class="lef-cta-row">
+      {% if current_user.is_authenticated %}
+        <a class="btn btn--white btn--lg" href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+        <a class="btn btn--white-outline btn--lg" href="{{ url_for('leaderboard') }}">View Leaderboard</a>
+      {% else %}
+        <a class="btn btn--white btn--lg" href="{{ url_for('register') }}">Register Your School</a>
+        <a class="btn btn--white-outline btn--lg" href="{{ url_for('lowest_emission_flights') }}">Learn More</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     PAGE BODY
+     ══════════════════════════════════════════ -->
+<div class="lef-page">
+  <div class="lef-page__inner">
+
+    <!-- KEY FIGURES -->
+    <section class="lef-section" id="key-figures">
+      <h2 class="lef-section__title">Key figures</h2>
+      <div class="lef-stats">
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">63%</div>
+          <div class="lef-stat__text">CO2 savings possible by choosing the lowest-emission itinerary</div>
+        </div>
+        <div class="lef-stat lef-stat--blue">
+          <div class="lef-stat__num">80%</div>
+          <div class="lef-stat__text">Emission reduction possible with Sustainable Aviation Fuel</div>
+        </div>
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">2.4%</div>
+          <div class="lef-stat__text">Of global CO2 currently from aviation — growing fast without action</div>
+        </div>
+        <div class="lef-stat lef-stat--blue">
+          <div class="lef-stat__num">1,000</div>
+          <div class="lef-stat__text">Starting points for every registered school on the challenge</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="lef-section" id="how-it-works">
+      <h2 class="lef-section__title">How it works</h2>
+      <div class="lef-section__body" style="margin-bottom:24px;">
+        <p>Every school starts with 1,000 points. Log flights to deduct points based on real emissions.
+        Earn them back through green actions. Ranked fairly by points per student.</p>
+      </div>
+      <div class="lef-grid lef-grid--3">
+        <div class="lef-card lef-card--light-blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#1e3a5f; margin-bottom:10px;">01</div>
+          <div class="lef-card__title">Log Your Flights</div>
+          <div class="lef-card__body">
+            Enter distance, cabin class, luggage weight and SAF percentage.
+            Points are deducted proportional to real-world CO2 emissions.
+          </div>
+        </div>
+        <div class="lef-card lef-card--light-blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#1e3a5f; margin-bottom:10px;">02</div>
+          <div class="lef-card__title">Take Green Actions</div>
+          <div class="lef-card__body">
+            Plant trees, collect waste, or produce solar energy to earn points back.
+            Sustainable actions have real, measurable impact on your score.
+          </div>
+        </div>
+        <div class="lef-card lef-card--light-blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#1e3a5f; margin-bottom:10px;">03</div>
+          <div class="lef-card__title">Compete on the Leaderboard</div>
+          <div class="lef-card__body">
+            Schools are ranked by points per student, so every pupil counts.
+            See how your school stacks up against others nationwide.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLY SMARTER -->
+    <section class="lef-section" id="fly-smarter">
+      <h2 class="lef-section__title">Fly smarter, not just less</h2>
+      <div class="lef-section__body" style="margin-bottom:24px;">
+        <p>The same route can produce vastly different emissions depending on aircraft type,
+        seating class, luggage, and fuel blend. Our guide shows you exactly how to make
+        every flight count less against the planet.</p>
+      </div>
+      <div class="lef-stats" style="margin-bottom:24px;">
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">3x</div>
+          <div class="lef-stat__text">more CO2 in business class compared to economy</div>
+        </div>
+        <div class="lef-stat lef-stat--blue">
+          <div class="lef-stat__num">22%</div>
+          <div class="lef-stat__text">saved by choosing the best available itinerary on a given route</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+        <span class="split-hero__pill" style="border-color:var(--green-pale2); background:var(--green-pale); color:var(--green-deep);">Sustainable Aviation Fuel</span>
+        <span class="split-hero__pill" style="border-color:var(--green-pale2); background:var(--green-pale); color:var(--green-deep);">Cabin Class</span>
+        <span class="split-hero__pill" style="border-color:var(--green-pale2); background:var(--green-pale); color:var(--green-deep);">Luggage Weight</span>
+        <span class="split-hero__pill" style="border-color:var(--green-pale2); background:var(--green-pale); color:var(--green-deep);">Aircraft Efficiency</span>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('lowest_emission_flights') }}">View the Full Guide</a>
+    </section>
+
+    <!-- SUSTAINABLE ACTIONS -->
+    <section class="lef-section" id="green-actions">
+      <h2 class="lef-section__title">Sustainable actions that earn points back</h2>
+      <div class="lef-grid lef-grid--3">
+        <div class="lef-card lef-card--blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#7dd3fc; margin-bottom:10px;">T</div>
+          <div class="lef-card__title" style="font-style:normal;">Collect Waste</div>
+          <div class="lef-card__body">
+            Each kilogram of rubbish collected earns +0.5 points.
+            A measurable, team-based activity for the whole school community.
+          </div>
+        </div>
+        <div class="lef-card lef-card--blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#7dd3fc; margin-bottom:10px;">S</div>
+          <div class="lef-card__title" style="font-style:normal;">Generate Solar Energy</div>
+          <div class="lef-card__body">
+            Solar production earns points on a square-root scale.
+            The more you generate, the more your efficiency compounds over time.
+          </div>
+        </div>
+        <div class="lef-card lef-card--blue">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.04em; color:#7dd3fc; margin-bottom:10px;">P</div>
+          <div class="lef-card__title" style="font-style:normal;">Plant Trees</div>
+          <div class="lef-card__body">
+            Every tree planted earns +5 points. Trees absorb CO2 over decades —
+            plant a forest and watch your score grow with it.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA (unauthenticated only) -->
+    {% if not current_user.is_authenticated %}
+    <section class="lef-section" id="join">
+      <div class="lef-card lef-card--blue" style="text-align:center; padding:48px 32px;">
+        <div style="font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:14px;">Join the Challenge</div>
+        <div style="font-size:26px; font-weight:800; letter-spacing:-0.03em; color:white; margin-bottom:12px; line-height:1.2;">
+          Ready to make your school's flights count?
+        </div>
+        <div style="font-size:15px; color:rgba(255,255,255,.75); margin-bottom:28px; line-height:1.6;">
+          Register for free. Start logging flights and taking action today.
+        </div>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn btn--white btn--lg" href="{{ url_for('register') }}">Register Your School</a>
+          <a class="btn btn--white-outline btn--lg" href="{{ url_for('login') }}">Log In</a>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

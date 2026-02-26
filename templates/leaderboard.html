@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ══════════════════════════════════════════
+     SPLIT HERO
+     ══════════════════════════════════════════ -->
+<section class="split-hero">
+  <div class="split-hero__img">
+    <img src="{{ url_for('static', filename='pictures/hero.jpg') }}" alt="Airplane in flight">
+  </div>
+  <div class="split-hero__panel split-hero__panel--green">
+    <div class="split-hero__breadcrumb">Schools Climate Challenge</div>
+    <h1 class="split-hero__title">Leaderboard</h1>
+    <p class="split-hero__body">
+      Schools ranked by points per student — so every pupil counts equally,
+      whether you have 50 students or 500.
+    </p>
+    <div class="split-hero__pills">
+      <span class="split-hero__pill">Points Per Student</span>
+      <span class="split-hero__pill">Live Rankings</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     PAGE BODY
+     ══════════════════════════════════════════ -->
+<div class="lef-page">
+  <div class="lef-page__inner">
+
+    {% if schools %}
+
+    <!-- TOP 3 -->
+    <section class="lef-section" id="top-schools">
+      <h2 class="lef-section__title">Top schools</h2>
+      <div class="lef-grid lef-grid--3" style="margin-bottom:0;">
+        {% for school in schools[:3] %}
+        <div class="lef-card {% if loop.index == 1 %}lef-card--blue{% else %}lef-card--light-blue{% endif %}"
+             style="text-align:center;">
+          <div class="lb-rank-label {% if loop.index == 1 %}lb-rank-label--first{% endif %}">
+            {% if loop.index == 1 %}1st{% elif loop.index == 2 %}2nd{% else %}3rd{% endif %}
+          </div>
+          <div style="font-size:15px; font-weight:700; margin-bottom:6px;
+            {% if loop.index == 1 %}color:white;{% else %}color:#0d2d4a;{% endif %}">
+            {{ school.name }}
+          </div>
+          <div style="font-size:30px; font-weight:800; letter-spacing:-0.04em; line-height:1;
+            {% if loop.index == 1 %}color:#7dd3fc;{% else %}color:var(--green-deep);{% endif %}">
+            {{ school.score_per_student() }}
+          </div>
+          <div style="font-size:12px; margin-top:5px;
+            {% if loop.index == 1 %}color:rgba(255,255,255,.65);{% else %}color:var(--text-muted);{% endif %}">
+            pts / student
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- FULL TABLE -->
+    <section class="lef-section" id="all-schools">
+      <h2 class="lef-section__title">All schools</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:70px;">Rank</th>
+              <th>School</th>
+              <th>Points</th>
+              <th>Score / student</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for school in schools %}
+            <tr {% if current_user.is_authenticated and school.name == current_user.name %}style="background:var(--green-pale);"{% endif %}>
+              <td>
+                {% if loop.index <= 3 %}
+                  <span class="lb-num lb-num--{{ loop.index }}">{{ loop.index }}</span>
+                {% else %}
+                  <span style="font-size:14px; color:var(--text-muted); font-weight:600;">{{ loop.index }}</span>
+                {% endif %}
+              </td>
+              <td>
+                <span style="font-weight:600;">{{ school.name }}</span>
+                {% if current_user.is_authenticated and school.name == current_user.name %}
+                  <span class="pill pill--green" style="margin-left:8px; font-size:11px;">You</span>
+                {% endif %}
+              </td>
+              <td>
+                <span style="font-weight:600;">{{ school.points | round(1) }}</span>
+              </td>
+              <td>
+                <span class="score-badge">{{ school.score_per_student() }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {% else %}
+
+    <section class="lef-section">
+      <h2 class="lef-section__title">No schools yet</h2>
+      <div class="lef-card lef-card--light-blue" style="text-align:center; padding:60px 28px;">
+        <div style="font-size:15px; font-weight:700; color:#0d2d4a; margin-bottom:8px;">No schools registered yet</div>
+        <div style="font-size:14px; color:#1a3a5c; margin-bottom:24px; line-height:1.6;">
+          Be the first school to register and claim the top spot on the leaderboard.
+        </div>
+        <a class="btn btn--primary" href="{{ url_for('register') }}">Register Your School</a>
+      </div>
+    </section>
+
+    {% endif %}
+
+    <!-- RANKING INFO -->
+    <section class="lef-section" id="how-ranking-works">
+      <h2 class="lef-section__title">How ranking works</h2>
+      <div class="lef-grid lef-grid--2">
+        <div class="lef-card lef-card--light-blue">
+          <div class="lef-card__title">Points per student</div>
+          <div class="lef-card__body">
+            Schools are ranked by <strong>points per student</strong>, not total points.
+            This means a school of 50 has exactly the same chance of winning as a school of 500.
+          </div>
+        </div>
+        <div class="lef-card lef-card--light-blue">
+          <div class="lef-card__title">Earn points back</div>
+          <div class="lef-card__body">
+            Log flights to track emissions; take green actions to earn points back.
+            Waste collection, solar energy, and tree planting all contribute to your score.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+{% endblock %}

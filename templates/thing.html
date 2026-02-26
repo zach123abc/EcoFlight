@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero-slide">
+  <div class="hero-overlay">
+    <h1>Lowest-Emission Flights</h1>
+    <p>Reducing aviation emissions through smarter choices</p>
+  </div>
+</section>
+
+<!-- SLIDING TEXT SECTIONS -->
+<section class="slide">
+  <div class="slide-inner">
+    <h2>Why Flight Choice Matters</h2>
+    <p>
+      The same journey can produce vastly different emissions depending on aircraft,
+      seating class, luggage weight, and fuel type.
+    </p>
+  </div>
+</section>
+
+<section class="slide dark">
+  <div class="slide-inner">
+    <h2>Small Choices, Big Impact</h2>
+    <p>
+      Economy seating, lighter luggage, and efficient aircraft can reduce emissions
+      by over 40% per passenger.
+    </p>
+  </div>
+</section>
+
+<!-- HORIZONTAL SCROLL SECTION -->
+<section class="horizontal">
+  <div class="horizontal-track">
+    <div class="h-card">
+      <h3>Aircraft Efficiency</h3>
+      <p>Newer aircraft burn less fuel per passenger.</p>
+    </div>
+
+    <div class="h-card">
+      <h3>Cabin Class</h3>
+      <p>Economy spreads emissions across more seats.</p>
+    </div>
+
+    <div class="h-card">
+      <h3>Luggage</h3>
+      <p>0.5 kg CO₂ per kg per 1000 km.</p>
+    </div>
+
+    <div class="h-card">
+      <h3>Sustainable Aviation Fuel</h3>
+      <p>Up to 80% lifecycle emission reduction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CALLOUT -->
+<section class="slide emphasis">
+  <div class="slide-inner">
+    <h2>Built Into the School Points System</h2>
+    <p>
+      Every flight deducts points based on real emissions — encouraging smarter planning.
+    </p>
+  </div>
+</section>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+}
+
+.hero-slide {
+  height: 100vh;
+  background: url("/static/pictures/hero.jpg") center/cover no-repeat fixed;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.3), rgba(0,0,0,.7), #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vw;
+  color: white;
+}
+
+.hero-overlay h1 {
+  font-size: 4rem;
+  margin: 0 0 20px 0;
+}
+
+.hero-overlay p {
+  font-size: 1.4rem;
+  max-width: 600px;
+  opacity: 0.85;
+}
+
+.slide {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8vw;
+  background: #000;
+  color: white;
+}
+
+.slide.dark {
+  background: #0a0a0a;
+}
+
+.slide.emphasis {
+  background: #111;
+}
+
+.slide-inner {
+  max-width: 750px;
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.horizontal {
+  position: relative;
+  height: 100vh;
+}
+
+.horizontal-track {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.h-card {
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vw;
+  background: #000;
+  color: white;
+  border-right: 1px solid #222;
+}
+
+.h-card h3 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.h-card p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  opacity: 0.8;
+}
+</style>
+
+<script>
+const horizontal = document.querySelector(".horizontal");
+const track = document.querySelector(".horizontal-track");
+
+window.addEventListener("scroll", () => {
+  if (!horizontal) return;
+
+  const rect = horizontal.getBoundingClientRect();
+  const scrollProgress = Math.min(
+    Math.max(-rect.top / rect.height, 0),
+    1
+  );
+
+  const maxScroll = track.scrollWidth - window.innerWidth;
+  track.style.transform = `translateX(-${scrollProgress * maxScroll}px)`;
+});
+</script>
+
+{% endblock %}

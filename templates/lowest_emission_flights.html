@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ══════════════════════════════════════════
+     SPLIT HERO — hero.jpg left · orange panel right
+     ══════════════════════════════════════════ -->
+<section class="split-hero">
+
+  <div class="split-hero__img">
+    <img src="{{ url_for('static', filename='pictures/hero.jpg') }}" alt="Aviation">
+  </div>
+
+  <div class="split-hero__panel">
+    <div class="split-hero__breadcrumb">
+      <a href="{{ url_for('index') }}">EcoFlight</a>
+      <span>›</span>
+      <span>Solutions</span>
+      <span>›</span>
+      <span>Lowest emission flights</span>
+    </div>
+
+    <h1 class="split-hero__title">Lowest emission flights</h1>
+    <p class="split-hero__body">Choose the flight with the least environmental impact</p>
+
+    <div class="split-hero__pills">
+      <span class="split-hero__pill">Professional travel</span>
+      <span class="split-hero__pill">Direct flights</span>
+      <span class="split-hero__pill">Fuel-efficiency</span>
+      <span class="split-hero__pill">Airline choice</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     MAIN LAYOUT — sidebar + content
+     ══════════════════════════════════════════ -->
+<div class="lef-wrap">
+
+  <!-- Sticky sidebar -->
+  <aside class="lef-sidebar">
+    <nav class="lef-nav">
+      <a class="lef-nav__item" href="#why">Why is it important?</a>
+      <a class="lef-nav__item" href="#solution">What's the solution?</a>
+      <a class="lef-nav__item" href="#attention">Point of attention</a>
+      <a class="lef-nav__item" href="#figures">Key figures</a>
+      <a class="lef-nav__item" href="#actions">Key actions</a>
+      <a class="lef-nav__item" href="#consider">To consider</a>
+      <a class="lef-nav__item" href="#stories">Success stories</a>
+      <a class="lef-nav__item" href="#tools">Tools &amp; good practices</a>
+      <a class="lef-nav__item" href="#ecoflight">In EcoFlight</a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="lef-content">
+
+    <!-- ── Why is it important? ── -->
+    <section class="lef-section" id="why">
+      <h2 class="lef-section__title">Why is it important?</h2>
+      <div class="lef-section__body">
+        <p>In a globalised world where travel has become a routine part of daily life,
+        aviation has become one of the fastest-growing sources of greenhouse gas emissions,
+        currently contributing to <strong>2.4% of global CO₂e emissions</strong>.
+        By 2050, this share could increase to 22%.</p>
+
+        <p>Beyond CO₂ emitted from burning fuels, aircraft engines also affect the
+        concentration of other atmospheric gases and pollutants. When released at high
+        altitudes, these emissions alter the physical and chemical properties of the
+        atmosphere, potentially forming long-lasting contrail cirrus clouds.
+        When including these <strong>non-CO₂ effects</strong>, aviation contributed to
+        <strong>4% of the global temperature increase</strong> since pre-industrial times.</p>
+
+        <p>The climate impact of aviation is projected to rise by <strong>200–360% by 2050</strong>,
+        even with maximum use of lower-carbon alternative fuels.</p>
+      </div>
+    </section>
+
+    <!-- ── What's the solution? ── -->
+    <section class="lef-section" id="solution">
+      <h2 class="lef-section__title">What's the solution?</h2>
+      <div class="lef-section__body">
+        <p>The solution to reducing carbon emissions in air travel involves several key strategies.
+        First, allowing <strong>only economy class</strong> significantly lowers CO₂ emissions per
+        passenger due to lighter and more numerous seats and fewer amenities. Second,
+        <strong>taking direct flights</strong> minimises the fuel-intensive take-off and landing stages.
+        Third, <strong>fuel-efficient aircraft</strong> offer improvement through advanced technology,
+        greatly reducing in-flight energy use. Finally, choosing <strong>more efficient airlines</strong>
+        that maximise seating capacity, have high load factors and improve operational efficiency,
+        reduces emissions further.</p>
+      </div>
+    </section>
+
+    <!-- ── Point of attention ── -->
+    <section class="lef-section" id="attention">
+      <div class="lef-card lef-card--light-blue">
+        <h3 class="lef-card__title"><em>Point of attention</em></h3>
+        <div class="lef-card__body">
+          <p><strong>Radiative forcing:</strong> Condensation trails of water vapour generated
+          by planes contribute to the formation of cirrus clouds. Those clouds trap outgoing
+          infrared radiation more effectively than they reflect incoming solar radiation,
+          participating in a warming effect. Studies show their effect is equivalent to
+          <strong>double or even triple the CO₂ emissions</strong> from aviation — meaning over
+          60% of aviation's impact on global warming could come from non-CO₂ effects.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Key figures ── -->
+    <section class="lef-section" id="figures">
+      <h2 class="lef-section__title">Key figures</h2>
+      <div class="lef-stats">
+
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">63%</div>
+          <div class="lef-stat__text">By choosing lower-emitting itineraries, passengers can reduce CO₂ emissions per trip by up to 63% compared to the most polluting option.</div>
+        </div>
+
+        <div class="lef-stat lef-stat--blue">
+          <div class="lef-stat__num">22%</div>
+          <div class="lef-stat__text">Choosing lower-emitting routes cuts emissions by approximately 22% compared to the average itinerary.</div>
+        </div>
+
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">2×</div>
+          <div class="lef-stat__text">Total emissions from aviation doubled between 1990 and 2018, as the increase in air traffic balanced out efficiency gains.</div>
+        </div>
+
+        <div class="lef-stat lef-stat--blue">
+          <div class="lef-stat__num">2.6–4.3×</div>
+          <div class="lef-stat__text">Economy seating can reduce emissions by 2.6 to 4.3 times when compared to first class seating.</div>
+        </div>
+
+        <div class="lef-stat lef-stat--green">
+          <div class="lef-stat__num">63%</div>
+          <div class="lef-stat__text">Difference in fuel intensity between the most efficient and least efficient airlines on transatlantic operations.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Key actions ── -->
+    <section class="lef-section" id="actions">
+      <h2 class="lef-section__title">Key actions</h2>
+      <div class="lef-grid lef-grid--2">
+
+        <div class="lef-card lef-card--light-blue">
+          <h3 class="lef-card__title"><em>#1 Fly economy class</em></h3>
+          <div class="lef-card__body">
+            <p>Flying business class emits <strong>3 times more CO₂e per passenger</strong> than economy class
+            (and 9 times more in first class). Economy class, with smaller, lighter and more numerous
+            seats, means each passenger accounts for a lesser portion of the whole plane's carbon
+            emissions. There are fewer amenities, fewer extra services and less baggage allowance,
+            further reducing the plane's total weight.</p>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--light-blue">
+          <h3 class="lef-card__title"><em>#2 Prefer direct flights</em></h3>
+          <div class="lef-card__body">
+            <p>Take-off and landing are <strong>fuel-intensive</strong>. During take-off, aircraft engines
+            operate at maximum thrust, consuming a substantial amount of fuel to gain altitude.
+            Similarly, landing requires considerable fuel to control descent and maintain safe speeds.
+            That is why direct flights significantly reduce emissions compared to connecting routes.</p>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--light-blue">
+          <h3 class="lef-card__title"><em>#3 Favour more efficient airlines</em></h3>
+          <div class="lef-card__body">
+            <p>Airline efficiency is determined by factors such as <strong>aircraft fuel burn, engine type,
+            winglets, seating and cargo capacity, passenger load factor</strong>, and freight share of
+            total payload. Some airlines are managed more efficiently than others, resulting in fewer
+            emissions per passenger. The most critical factors remain aircraft fuel burn and seating density.</p>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--light-blue">
+          <h3 class="lef-card__title"><em>#4 Use search engines that show climate impact</em></h3>
+          <div class="lef-card__body">
+            <p>Use search engines that provide an estimation of greenhouse gas emissions per flight.
+            For example, the <strong>Travel Impact Model</strong> provides emissions per seat/passenger
+            for each flight by integrating factors such as origin, destination, aircraft type,
+            cabin class and seat configuration. Google Flights uses this model — but note that
+            non-CO₂ effects are not yet included.</p>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--light-blue">
+          <h3 class="lef-card__title"><em>#5 Adapt the booking process</em></h3>
+          <div class="lef-card__body">
+            <p>Whether flights are booked directly by staff, through an internal department, or a
+            travel agency, make sure that <strong>emissions per flight are showcased</strong> and taken
+            into account in the final choice. Adapt the booking process to privilege less-emitting
+            itineraries through both voluntary and compulsory measures — showing lower-emission
+            options first, requiring staff to prefer the least emissive routes.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── To consider ── -->
+    <section class="lef-section" id="consider">
+      <h2 class="lef-section__title">To consider</h2>
+      <div class="lef-grid lef-grid--2">
+
+        <div class="lef-card lef-card--blue">
+          <h3 class="lef-card__title">Potential co-benefits</h3>
+          <div class="lef-card__body">
+            <ul>
+              <li><strong>Cost savings:</strong> Efficient airlines often have lower operational costs, leading to more competitive ticket prices. Economy class also offers additional savings.</li>
+              <li><strong>Encouraging sustainability:</strong> Favouring efficient airlines creates demand for more sustainable practices across the industry.</li>
+              <li><strong>Health benefits:</strong> Reducing air travel emissions decreases particulate matter and noise pollution globally.</li>
+              <li><strong>Improved efficiency:</strong> Direct flights reduce travel time, eliminate baggage transfers, and lower the risk of missed connections.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--blue">
+          <h3 class="lef-card__title">Success conditions</h3>
+          <div class="lef-card__body">
+            <ul>
+              <li><strong>Leading by example:</strong> Managers and leaders should demonstrate commitment by choosing less emissive flight options.</li>
+              <li><strong>Updated travel policy:</strong> The organisation's travel policy must incorporate the preference for low-emission flights and ensure compliance.</li>
+              <li><strong>Budget management:</strong> Higher costs of direct flights can be offset by flying economy class or reducing the number of trips.</li>
+              <li><strong>Raising awareness:</strong> Engaging leadership in the decision-making process is key to ensuring broader organisational acceptance.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--blue">
+          <h3 class="lef-card__title">Prerequisites &amp; specific considerations</h3>
+          <div class="lef-card__body">
+            <ul>
+              <li><strong>Availability:</strong> Direct flights or routes with more efficient airlines may not always be available.</li>
+              <li><strong>Policy integration:</strong> Implementing this solution requires adjustments to the travel policy and booking tools.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lef-card lef-card--blue">
+          <h3 class="lef-card__title">Potential risks</h3>
+          <div class="lef-card__body">
+            <ul>
+              <li><strong>Increased booking time:</strong> Selecting more efficient routes or airlines may require additional effort during the booking process.</li>
+              <li><strong>Higher costs:</strong> Direct flights are often more expensive than connecting options.</li>
+              <li><strong>Comfort concerns:</strong> Some staff may perceive a move from premium to economy class as a loss of benefits.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Success stories ── -->
+    <section class="lef-section" id="stories">
+      <h2 class="lef-section__title">Success stories</h2>
+      <div class="lef-stories">
+
+        <div class="lef-story">
+          <div class="lef-story__title">Coldplay: show tour promotes Sustainable Aviation Fuel, 2024</div>
+          <div class="lef-story__body">
+            During tour shows, the band Coldplay paid extra to use Sustainable Aviation Fuel (SAF)
+            for commercial and charter flights. SAF used was produced from waste such as used cooking oil.
+          </div>
+          <a class="lef-story__link" href="https://sustainability.coldplay.com/" target="_blank" rel="noopener">Read more →</a>
+        </div>
+
+        <div class="lef-story">
+          <div class="lef-story__title">EPFL: Emission reduction potential from air travel, 2019</div>
+          <div class="lef-story__body">
+            A study at the École Polytechnique Fédérale de Lausanne found that air travel accounted
+            for one third of the institution's CO₂ emissions, with 10% of researchers responsible for
+            nearly 60% of the emissions. Simple measures — flying economy, replacing short flights with
+            trains, avoiding layovers — could reduce emissions by <strong>36%</strong>.
+          </div>
+          <a class="lef-story__link" href="https://www.mdpi.com/2071-1050/11/1/80" target="_blank" rel="noopener">Read more →</a>
+        </div>
+
+        <div class="lef-story">
+          <div class="lef-story__title">Doctors Without Borders: Choosing direct and economy class</div>
+          <div class="lef-story__body">
+            Doctors Without Borders developed a decision tree to guide the booking process for staff.
+            If flying is the only option, staff should book a <strong>direct, economy class flight</strong>.
+          </div>
+          <a class="lef-story__link" href="https://www.msf.ch/sites/default/files/2024-08/MSFOCGClimateRoadmap_ProgressReport2024_v2.pdf" target="_blank" rel="noopener">Read more →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Tools and good practices ── -->
+    <section class="lef-section" id="tools">
+      <h2 class="lef-section__title">Tools and good practices</h2>
+      <div class="lef-ctas">
+
+        <div class="lef-cta">
+          <div class="lef-cta__title">Climate Action Accelerator — Travel toolkit, 2024</div>
+          <div class="lef-cta__body">The Climate Action Accelerator has developed a professional travel toolkit to help organisations implement travel emissions reduction targets.</div>
+          <a class="lef-cta__link" href="https://climateactionaccelerator.org/" target="_blank" rel="noopener">View resource →</a>
+        </div>
+
+        <div class="lef-cta">
+          <div class="lef-cta__title">Google Flights — Integrating emission data</div>
+          <div class="lef-cta__body">Google Flights displays estimated CO₂ emissions per flight using the Travel Impact Model, making it easier to compare options at the point of booking.</div>
+          <a class="lef-cta__link" href="https://www.google.com/travel/flights" target="_blank" rel="noopener">View resource →</a>
+        </div>
+
+        <div class="lef-cta">
+          <div class="lef-cta__title">Atmosfair — Airline efficiency ranking, 2024</div>
+          <div class="lef-cta__body">Atmosfair publishes an annual airline ranking based on fuel efficiency and CO₂ emissions per passenger kilometre, covering over 200 airlines worldwide.</div>
+          <a class="lef-cta__link" href="https://www.atmosfair.de/en/" target="_blank" rel="noopener">View resource →</a>
+        </div>
+
+        <div class="lef-cta">
+          <div class="lef-cta__title">ICCT — Transatlantic airline fuel efficiency ranking</div>
+          <div class="lef-cta__body">The International Council on Clean Transportation publishes detailed fuel efficiency data and rankings for airlines operating transatlantic routes.</div>
+          <a class="lef-cta__link" href="https://theicct.org/" target="_blank" rel="noopener">View resource →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── In EcoFlight ── -->
+    <section class="lef-section" id="ecoflight">
+      <h2 class="lef-section__title">In EcoFlight</h2>
+      <div class="lef-section__body">
+        <p>Every flight logged in EcoFlight deducts points based on real CO₂ emissions,
+        using the same factors described on this page — cabin class, SAF blend, luggage weight,
+        and distance. Schools that choose smarter flights earn fewer deductions and climb the leaderboard.</p>
+      </div>
+
+      <div class="lef-formula">
+        <div class="lef-formula__label">Emission formula used in EcoFlight</div>
+        <code class="lef-formula__code">
+          luggage_co2 = (distance ÷ 1000) × luggage_kg × 0.5<br>
+          total_co2 &nbsp;= (TIM + luggage_co2) × cabin_multiplier × (1 − SAF%)<br>
+          points_lost = total_co2 ÷ 5
+        </code>
+      </div>
+
+      <div class="lef-cta-row">
+        {% if current_user.is_authenticated %}
+          <a class="btn btn--primary btn--lg" href="{{ url_for('dashboard') }}">Log a flight →</a>
+        {% else %}
+          <a class="btn btn--primary btn--lg" href="{{ url_for('register') }}">Register your school →</a>
+        {% endif %}
+        <a class="btn btn--ghost btn--lg" href="{{ url_for('leaderboard') }}">View leaderboard →</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+{% endblock %}
