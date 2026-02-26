@@ -11,3 +11,4 @@ MarkupSafe
 SQLAlchemy
 typing_extensions
 Werkzeug
+psycopg2-binary
