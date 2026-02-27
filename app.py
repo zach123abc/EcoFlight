@@ -28,20 +28,7 @@ app = Flask(
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev- secret")
 
-database_url = os.environ.get("POSTGRES_URL_NON_POOLING") or os.environ.get("POSTGRES_URL") or os.environ.get("DATABASE_URL")
-if database_url:
-    # SQLAlchemy wants postgresql://
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-
-    # Supabase needs SSL
-    if "sslmode=" not in database_url:
-        joiner = "&" if "?" in database_url else "?"
-        database_url = database_url + f"{joiner}sslmode=require"
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
-else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///schools.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///schools.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = os.path.join(app.static_folder, "pictures")
