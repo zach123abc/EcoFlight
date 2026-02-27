@@ -11,6 +11,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+
 # Force Flask to always find templates/static relative to this app.py file
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -91,6 +92,7 @@ class School(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(School, int(user_id))
+
 _db_inited = False
 
 def init_db_once():
@@ -102,9 +104,8 @@ def init_db_once():
             db.create_all()
         _db_inited = True
     except Exception as e:
-        # Don't crash the whole site just because DB is down.
-        # We'll show pages, and only DB actions will fail.
         print("DB init failed:", e)
+
 # -----------------------------
 # ROUTES
 # -----------------------------
@@ -115,6 +116,7 @@ def index():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    init_db_once()
     if request.method == "POST":
         try:
             name = request.form["name"]
@@ -151,6 +153,7 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    init_db_once()
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -174,6 +177,7 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    init_db_once()
     images = list_gallery_images()
     return render_template("dashboard.html", school=current_user, images=images)
 
@@ -187,6 +191,7 @@ def lowest_emission_flights():
 @app.route("/add_flight", methods=["POST"])
 @login_required
 def add_flight():
+    init_db_once()
     try:
         distance = float(request.form["distance"])
         tim_estimate = float(request.form["tim"])
@@ -227,6 +232,7 @@ def add_flight():
 @app.route("/add_action", methods=["POST"])
 @login_required
 def add_action():
+    init_db_once()
     try:
         action = request.form["action"]
         amount = float(request.form["amount"])
@@ -264,6 +270,7 @@ def add_action():
 @app.route("/upload", methods=["POST"])
 @login_required
 def upload():
+    init_db_once()
     if "photo" not in request.files:
         flash("No file selected.")
         return redirect(url_for("dashboard"))
@@ -289,6 +296,7 @@ def upload():
 # -----------------------------
 @app.route("/leaderboard")
 def leaderboard():
+    init_db_once()
     schools = School.query.all()
     ranked = sorted(schools, key=lambda x: x.score_per_student(), reverse=True)
     return render_template("leaderboard.html", schools=ranked)
