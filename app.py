@@ -91,9 +91,20 @@ class School(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(School, int(user_id))
-@app.before_request
-def ensure_tables_exist():
-    db.create_all()
+_db_inited = False
+
+def init_db_once():
+    global _db_inited
+    if _db_inited:
+        return
+    try:
+        with app.app_context():
+            db.create_all()
+        _db_inited = True
+    except Exception as e:
+        # Don't crash the whole site just because DB is down.
+        # We'll show pages, and only DB actions will fail.
+        print("DB init failed:", e)
 # -----------------------------
 # ROUTES
 # -----------------------------
