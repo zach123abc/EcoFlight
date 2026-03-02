@@ -185,7 +185,7 @@
               <div class="dash-step-badge">F</div>
               <div>
                 <div style="font-size:14px; font-weight:700; color:white; margin-bottom:3px;">Flights deduct points</div>
-                <div style="font-size:13px; color:rgba(255,255,255,.75); line-height:1.5;">Points lost = total CO₂ / 5</div>
+                <div style="font-size:13px; color:rgba(255,255,255,.75); line-height:1.5;">Points lost = total CO₂ / 80</div>
               </div>
             </div>
             <div style="display:flex; align-items:flex-start; gap:14px;">
@@ -218,7 +218,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(short 0.255 · medium 0.195 · long 0.147 kg CO₂/km/pax)<br><br>
           luggage_co2 = (distance / 1000) × luggage_kg × 0.5<br>
           total_co2 &nbsp;&nbsp;= (tim_co2 + luggage_co2) × cabin × (1 − SAF)<br>
-          points_lost = total_co2 / 5
+          points_lost = total_co2 / 80
         </code>
       </div>
       <div style="margin-top:16px;">
@@ -268,7 +268,7 @@
     const timCo2     = distance * pax * factor;
     const luggageCo2 = (distance / 1000) * luggage * 0.5;
     const totalCo2   = (timCo2 + luggageCo2) * cabin * (1 - saf);
-    const pts        = totalCo2 / 5;
+    const pts        = totalCo2 / 80;
 
     document.getElementById('co2-preview-val').textContent = totalCo2.toFixed(1);
     document.getElementById('pts-preview-val').textContent  = pts.toFixed(1);
