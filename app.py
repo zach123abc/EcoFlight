@@ -94,6 +94,25 @@ def init_db_once():
         print("DB init failed:", e)
 
 # -----------------------------
+# TIM CO2 EMISSION FACTORS
+# kg CO2 per passenger per km (based on flight type)
+# These are industry-standard ICAO approximations.
+# -----------------------------
+TIM_EMISSION_FACTORS = {
+    "short":  0.255,   # short-haul < 1500 km  (e.g. domestic / intra-Europe)
+    "medium": 0.195,   # medium-haul 1500–4000 km
+    "long":   0.147,   # long-haul > 4000 km   (larger, more efficient aircraft)
+}
+
+def calculate_tim_co2(distance: float, passengers: int, flight_type: str) -> float:
+    """
+    Auto-calculate TIM (Total In-flight Movement) CO2 emissions.
+    formula: distance (km) * passengers * emission_factor (kg CO2/km/pax)
+    """
+    factor = TIM_EMISSION_FACTORS.get(flight_type, 0.255)
+    return distance * passengers * factor
+
+# -----------------------------
 # ROUTES
 # -----------------------------
 @app.route("/")
@@ -173,18 +192,19 @@ def lowest_emission_flights():
     return render_template("lowest_emission_flights.html")
 
 # -----------------------------
-# ADD FLIGHT (NO AIRLINE FACTOR)
+# ADD FLIGHT (AUTO TIM CO2)
 # -----------------------------
 @app.route("/add_flight", methods=["POST"])
 @login_required
 def add_flight():
     init_db_once()
     try:
-        distance = float(request.form["distance"])
-        tim_estimate = float(request.form["tim"])
-        luggage = float(request.form["luggage"])
-        cabin_multiplier = float(request.form["cabin"])
-        saf_percent = float(request.form["saf"])
+        distance        = float(request.form["distance"])
+        passengers      = int(request.form["passengers"])
+        luggage         = float(request.form["luggage"])
+        cabin_multiplier= float(request.form["cabin"])
+        saf_percent     = float(request.form["saf"])
+        flight_type     = request.form["flight_type"]   # short / medium / long
     except ValueError:
         flash("Please enter numbers only (e.g. 1000, 250.5).")
         return redirect(url_for("dashboard"))
@@ -192,25 +212,35 @@ def add_flight():
         flash("Please fill in all flight fields.")
         return redirect(url_for("dashboard"))
 
-    if distance < 0 or tim_estimate < 0 or luggage < 0 or cabin_multiplier <= 0:
-        flash("Distance, TIM, luggage must be ≥ 0 and cabin multiplier must be > 0.")
+    if distance < 0 or passengers <= 0 or luggage < 0 or cabin_multiplier <= 0:
+        flash("Distance/luggage must be ≥ 0, passengers must be > 0, cabin multiplier must be > 0.")
         return redirect(url_for("dashboard"))
 
     if not (0 <= saf_percent <= 1):
         flash("SAF must be between 0 and 1 (example: 0.1 for 10%).")
         return redirect(url_for("dashboard"))
 
+    if flight_type not in TIM_EMISSION_FACTORS:
+        flash("Invalid flight type selected.")
+        return redirect(url_for("dashboard"))
+
+    # Auto-calculate TIM CO2 from distance, passengers and flight type
+    tim_co2 = calculate_tim_co2(distance, passengers, flight_type)
+
+    # Luggage adds extra CO2 (per passenger, proportional to distance)
     luggage_co2 = (distance / 1000) * luggage * 0.5
-    total_co2 = (tim_estimate + luggage_co2)
+
+    total_co2  = (tim_co2 + luggage_co2)
     total_co2 *= cabin_multiplier
     total_co2 *= (1 - saf_percent)
 
     points_deducted = total_co2 / 5
 
-    current_user.points = max(current_user.points - points_deducted, 0)
+    current_user.points          = max(current_user.points - points_deducted, 0)
     current_user.total_emissions += total_co2
 
     db.session.commit()
+    flash(f"Flight logged. Estimated CO2: {round(total_co2, 1)} kg — {round(points_deducted, 1)} points deducted.")
     return redirect(url_for("dashboard"))
 
 # -----------------------------
@@ -234,10 +264,6 @@ def add_action():
         flash("Amount must be ≥ 0.")
         return redirect(url_for("dashboard"))
 
-    # Harder rewards:
-    # trash: +0.5 per kg
-    # solar: diminishing returns -> points += floor(sqrt(kWh))
-    # trees: +5 per tree
     if action == "trash":
         current_user.points += amount * 0.5
     elif action == "solar":
