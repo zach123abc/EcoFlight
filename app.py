@@ -234,7 +234,7 @@ def add_flight():
     total_co2 *= cabin_multiplier
     total_co2 *= (1 - saf_percent)
 
-    points_deducted = total_co2 / 80
+    points_deducted = total_co2 / 100
 
     current_user.points          = max(current_user.points - points_deducted, 0)
     current_user.total_emissions += total_co2
